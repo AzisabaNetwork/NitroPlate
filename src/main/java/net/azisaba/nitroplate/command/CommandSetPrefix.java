@@ -14,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import xyz.acrylicstyle.util.InvalidArgumentException;
 import xyz.acrylicstyle.util.StringReader;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,7 +40,13 @@ public class CommandSetPrefix implements TabExecutor {
         }
         if (!player.hasPermission("nitroplate.setprefix.bypass")) {
             boolean isAllowed = !strip.toLowerCase().contains("admin");
+            if (ChatColor.translateAlternateColorCodes('&', prefix).contains("§k")) {
+                isAllowed = false;
+            }
             if (strip.contains("Mod") || strip.contains("Mgr") || strip.contains("Dev")) {
+                isAllowed = false;
+            }
+            if (strip.toLowerCase().contains("[mod]") || strip.toLowerCase().contains("[mgr]") || strip.toLowerCase().contains("[dev]")) {
                 isAllowed = false;
             }
             if (strip.matches("\\d+円皿")) {
@@ -58,7 +65,7 @@ public class CommandSetPrefix implements TabExecutor {
             }
         }
         net.azisaba.azipluginmessaging.api.entity.Player apiPlayer = AziPluginMessagingProvider.get().getPlayerAdapter(Player.class).get(player);
-        ProxyboundSetPrefixMessage message = new ProxyboundSetPrefixMessage(apiPlayer, global, prefix);
+        ProxyboundSetPrefixMessage message = new ProxyboundSetPrefixMessage(apiPlayer, global, prefix + " ");
         Protocol.P_SET_PREFIX.sendPacket(AziPluginMessagingProvider.get().getServer().getPacketSender(), message);
         if ("ja_jp".equalsIgnoreCase(player.getLocale())) {
             player.sendMessage(ChatColor.GREEN + "Prefixを設定しました。");
@@ -79,6 +86,26 @@ public class CommandSetPrefix implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return Collections.singletonList(ChatColor.translateAlternateColorCodes('&', String.join(" ", args)));
+        return suggest(sender, String.join(" ", args));
+    }
+
+    static @NotNull List<String> suggest(@NotNull CommandSender sender, @NotNull String rawPrefix) {
+        if (!(sender instanceof Player)) return Collections.emptyList();
+        if (rawPrefix.isEmpty()) {
+            return Collections.emptyList();
+        }
+        if (rawPrefix.startsWith("\"") && !rawPrefix.endsWith("\"")) {
+            rawPrefix += "\"";
+        }
+        StringReader reader = StringReader.create(rawPrefix);
+        reader.skipWhitespace();
+        String prefix;
+        try {
+            prefix = reader.readQuotableString('\\', '"');
+        } catch (InvalidArgumentException e) {
+            return Arrays.asList(Util.toString(e).split("\n"));
+        }
+        String colored = ChatColor.WHITE + ChatColor.translateAlternateColorCodes('&', prefix);
+        return Collections.singletonList(colored + " " + ((Player) sender).getDisplayName());
     }
 }

@@ -1,12 +1,10 @@
 package net.azisaba.nitroplate.command;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
-import java.util.Collections;
 import java.util.List;
 
 public class CommandSetGlobalPrefix implements TabExecutor {
@@ -22,6 +20,6 @@ public class CommandSetGlobalPrefix implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return Collections.singletonList(ChatColor.translateAlternateColorCodes('&', String.join(" ", args)));
+        return CommandSetPrefix.suggest(sender, String.join(" ", args));
     }
 }
