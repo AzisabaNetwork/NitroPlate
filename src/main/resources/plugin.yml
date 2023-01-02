@@ -1,0 +1,14 @@
+name: NitroPlate
+main: net.azisaba.nitroplate.NitroPlate
+version: ${version}
+depend:
+  - AziPluginMessaging
+commands:
+  setprefix:
+    permission: nitroplate.setprefix
+  setglobalprefix:
+    permission: nitroplate.setglobalprefix
+  clearprefix:
+    permission: nitroplate.clearprefix
+  clearglobalprefix:
+    permission: nitroplate.clearglobalprefix
