@@ -4,6 +4,7 @@ import net.azisaba.nitroplate.command.CommandClearGlobalPrefix;
 import net.azisaba.nitroplate.command.CommandClearPrefix;
 import net.azisaba.nitroplate.command.CommandSetGlobalPrefix;
 import net.azisaba.nitroplate.command.CommandSetPrefix;
+import net.azisaba.nitroplate.command.CommandToggleNitro;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -18,5 +19,6 @@ public class NitroPlate extends JavaPlugin {
         Bukkit.getPluginCommand("setglobalprefix").setExecutor(new CommandSetGlobalPrefix());
         Bukkit.getPluginCommand("clearprefix").setExecutor(new CommandClearPrefix());
         Bukkit.getPluginCommand("clearglobalprefix").setExecutor(new CommandClearGlobalPrefix());
+        Bukkit.getPluginCommand("togglenitro").setExecutor(new CommandToggleNitro());
     }
 }

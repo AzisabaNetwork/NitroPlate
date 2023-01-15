@@ -19,12 +19,12 @@ import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class CommandClearPrefix implements TabExecutor {
-    static @Nullable Player getTarget(CommandSender sender, String[] args) {
+    static @Nullable Player getTarget(String commandName, CommandSender sender, String[] args) {
         if (!(sender instanceof Player) && args.length == 0) {
             sender.sendMessage("This command cannot be executed by console.");
             return null;
         }
-        if (args.length == 0 || (sender instanceof Player && !sender.hasPermission("nitroplate.clearprefix.others"))) {
+        if (args.length == 0 || (sender instanceof Player && !sender.hasPermission("nitroplate." + commandName + ".others"))) {
             return (Player) sender;
         }
         Player target = Bukkit.getPlayerExact(args[0]);
@@ -49,7 +49,7 @@ public class CommandClearPrefix implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Player target = getTarget(sender, args);
+        Player target = getTarget("clearprefix", sender, args);
         if (target == null) return true;
         clearPrefix(sender, target, false);
         return true;

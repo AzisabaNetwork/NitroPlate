@@ -12,3 +12,5 @@ commands:
     permission: nitroplate.clearprefix
   clearglobalprefix:
     permission: nitroplate.clearglobalprefix
+  togglenitro:
+    permission: nitroplate.togglenitro
