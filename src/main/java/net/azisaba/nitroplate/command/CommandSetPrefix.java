@@ -43,13 +43,22 @@ public class CommandSetPrefix implements TabExecutor {
             if (ChatColor.translateAlternateColorCodes('&', prefix).contains("§k")) {
                 isAllowed = false;
             }
-            if (strip.contains("Mod") || strip.contains("Mgr") || strip.contains("Dev")) {
+            if (strip.toLowerCase().contains("owner")) {
                 isAllowed = false;
             }
-            if (strip.toLowerCase().contains("[mod]") || strip.toLowerCase().contains("[mgr]") || strip.toLowerCase().contains("[dev]")) {
+            if (strip.contains("Member") || strip.toLowerCase().contains("[member]")) {
                 isAllowed = false;
             }
-            if (strip.matches("\\d+円皿")) {
+            if (strip.contains("Mod") || strip.toLowerCase().contains("[mod]")) {
+                isAllowed = false;
+            }
+            if (strip.contains("Mgr") || strip.toLowerCase().contains("[mgr]")) {
+                isAllowed = false;
+            }
+            if (strip.contains("Dev") || strip.toLowerCase().contains("[dev]")) {
+                isAllowed = false;
+            }
+            if (strip.matches(".*(100|500|1000|2000|5000|10000|20000|50000|100000)円皿.*")) {
                 isAllowed = false;
             }
             if ((global || NitroPlate.preventRankPrefix) && strip.contains("Rank")) {
