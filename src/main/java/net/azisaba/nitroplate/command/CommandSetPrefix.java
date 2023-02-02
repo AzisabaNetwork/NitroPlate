@@ -64,6 +64,9 @@ public class CommandSetPrefix implements TabExecutor {
             if (strip.contains("Dev") || strip.toLowerCase().contains("[dev]")) {
                 isAllowed = false;
             }
+            if (strip.startsWith("●")) {
+                isAllowed = false;
+            }
             if (strip.matches(".*(100|500|1000|2000|5000|10000|20000|50000|100000)円皿.*")) {
                 isAllowed = false;
             }
