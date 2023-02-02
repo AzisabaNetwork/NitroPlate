@@ -16,9 +16,15 @@ import xyz.acrylicstyle.util.StringReader;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CommandSetPrefix implements TabExecutor {
+    private static final Set<String> STRIP_CONTAINS_DISALLOW = new HashSet<>(Arrays.asList(
+            "Member", "Builder", "YouTuber", "Youtuber", "Mod", "Mgr", "Dev", "ゲーミング"
+    ));
+
     static void setPrefix(@NotNull Player player, @NotNull String rawPrefix, boolean global) {
         StringReader reader = StringReader.create(rawPrefix);
         reader.skipWhitespace();
@@ -39,44 +45,20 @@ public class CommandSetPrefix implements TabExecutor {
             return;
         }
         if (!player.hasPermission("nitroplate.setprefix.bypass")) {
-            boolean isAllowed = !strip.toLowerCase().contains("admin");
-            if (ChatColor.translateAlternateColorCodes('&', prefix).contains("§k")) {
-                isAllowed = false;
-            }
-            if (strip.toLowerCase().contains("owner")) {
-                isAllowed = false;
-            }
-            if (strip.contains("Member") || strip.toLowerCase().contains("[member]")) {
-                isAllowed = false;
-            }
-            if (strip.contains("Builder") || strip.toLowerCase().contains("[builder]")) {
-                isAllowed = false;
-            }
-            if (strip.contains("YouTuber") || strip.contains("Youtuber") || strip.toLowerCase().contains("[youtuber]")) {
-                isAllowed = false;
-            }
-            if (strip.contains("Mod") || strip.toLowerCase().contains("[mod]")) {
-                isAllowed = false;
-            }
-            if (strip.contains("Mgr") || strip.toLowerCase().contains("[mgr]")) {
-                isAllowed = false;
-            }
-            if (strip.contains("Dev") || strip.toLowerCase().contains("[dev]")) {
-                isAllowed = false;
-            }
-            if (strip.contains("ゲーミング")) {
-                isAllowed = false;
-            }
-            if (strip.startsWith("●")) {
-                isAllowed = false;
-            }
-            if (strip.matches(".*(100|500|1000|2000|5000|10000|20000|50000|100000)円皿.*")) {
-                isAllowed = false;
-            }
-            if ((global || NitroPlate.preventRankPrefix) && strip.contains("Rank")) {
-                isAllowed = false;
-            }
-            if (!isAllowed) {
+            boolean isDisallowed = strip.toLowerCase().contains("admin") ||
+                    ChatColor.translateAlternateColorCodes('&', prefix).contains("§k") ||
+                    strip.toLowerCase().contains("owner") ||
+                    strip.toLowerCase().contains("[member]") ||
+                    strip.toLowerCase().contains("[builder]") ||
+                    strip.toLowerCase().contains("[youtuber]") ||
+                    strip.toLowerCase().contains("[mod]") ||
+                    strip.toLowerCase().contains("[mgr]") ||
+                    strip.toLowerCase().contains("[dev]") ||
+                    strip.startsWith("●") ||
+                    strip.matches(".*(100|500|1000|2000|5000|10000|20000|50000|100000)円皿.*") ||
+                    (global || NitroPlate.preventRankPrefix) && strip.contains("Rank") ||
+                    STRIP_CONTAINS_DISALLOW.stream().anyMatch(strip::contains);
+            if (isDisallowed) {
                 if ("ja_jp".equalsIgnoreCase(player.getLocale())) {
                     player.sendMessage(ChatColor.RED + "Prefixに使用できない文字が含まれています。");
                 } else {
