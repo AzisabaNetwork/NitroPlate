@@ -49,6 +49,9 @@ public class CommandSetPrefix implements TabExecutor {
             if (strip.contains("Member") || strip.toLowerCase().contains("[member]")) {
                 isAllowed = false;
             }
+            if (strip.contains("Builder") || strip.toLowerCase().contains("[builder]")) {
+                isAllowed = false;
+            }
             if (strip.contains("Mod") || strip.toLowerCase().contains("[mod]")) {
                 isAllowed = false;
             }
