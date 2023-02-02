@@ -22,7 +22,7 @@ import java.util.Set;
 
 public class CommandSetPrefix implements TabExecutor {
     private static final Set<String> STRIP_CONTAINS_DISALLOW = new HashSet<>(Arrays.asList(
-            "Member", "Builder", "YouTuber", "Youtuber", "Mod", "Mgr", "Dev", "ゲーミング"
+            "Member", "Builder", "YouTuber", "Youtuber", "Mod", "Mgr", "Dev", "ゲーミング", "鯖主", "[Broadcast]"
     ));
 
     static void setPrefix(@NotNull Player player, @NotNull String rawPrefix, boolean global) {
