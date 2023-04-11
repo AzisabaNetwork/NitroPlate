@@ -35,7 +35,9 @@ public class CommandSetPrefix implements TabExecutor {
             player.sendMessage(Util.toString(e));
             return;
         }
-        String strip = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', prefix));
+        String strip =
+                ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', prefix))
+                        .replace('À', 'A').replace('Á', 'A');
         if (prefix.length() > 150 || strip.length() > 16) {
             if ("ja_jp".equalsIgnoreCase(player.getLocale())) {
                 player.sendMessage(ChatColor.RED + "Prefixが長すぎます。");
@@ -46,6 +48,7 @@ public class CommandSetPrefix implements TabExecutor {
         }
         if (!player.hasPermission("nitroplate.setprefix.bypass")) {
             boolean isDisallowed = strip.toLowerCase().contains("admin") ||
+                    strip.toLowerCase().contains("abmin") ||
                     ChatColor.translateAlternateColorCodes('&', prefix).contains("§k") ||
                     strip.toLowerCase().contains("owner") ||
                     strip.toLowerCase().contains("[member]") ||
