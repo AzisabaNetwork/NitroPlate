@@ -49,6 +49,7 @@ public class CommandSetPrefix implements TabExecutor {
         if (!player.hasPermission("nitroplate.setprefix.bypass")) {
             boolean isDisallowed = strip.toLowerCase().contains("admin") ||
                     strip.toLowerCase().contains("abmin") ||
+                    strip.toLowerCase().contains("admln") ||
                     ChatColor.translateAlternateColorCodes('&', prefix).contains("§k") ||
                     strip.toLowerCase().contains("owner") ||
                     strip.toLowerCase().contains("[member]") ||
@@ -57,6 +58,7 @@ public class CommandSetPrefix implements TabExecutor {
                     strip.toLowerCase().contains("[mod]") ||
                     strip.toLowerCase().contains("[mgr]") ||
                     strip.toLowerCase().contains("[dev]") ||
+                    strip.toLowerCase().contains("[vip]") ||
                     strip.startsWith("●") ||
                     strip.matches(".*(100|500|1000|2000|5000|10000|20000|50000|100000)円皿.*") ||
                     (global || NitroPlate.preventRankPrefix) && strip.contains("Rank") ||
