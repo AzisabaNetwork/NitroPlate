@@ -4,7 +4,9 @@ plugins {
 }
 
 group = "net.azisaba"
-version = "1.0.5"
+version = "1.0.6"
+
+java.toolchain.languageVersion.set(JavaLanguageVersion.of(8))
 
 repositories {
     mavenCentral()
@@ -15,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    implementation("xyz.acrylicstyle.java-util:common:1.2.0-SNAPSHOT")
+    implementation("xyz.acrylicstyle.java-util:common:2.0.0-SNAPSHOT")
     compileOnly("org.spigotmc:spigot-api:1.12.2-R0.1-SNAPSHOT")
     compileOnly("net.azisaba.azipluginmessaging:api:4.0.3")
 }
