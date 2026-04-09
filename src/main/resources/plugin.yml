@@ -1,6 +1,7 @@
 name: NitroPlate
 main: net.azisaba.nitroplate.NitroPlate
 version: ${version}
+api-version: 1.13
 depend:
   - AziPluginMessaging
 commands:
