@@ -35,9 +35,9 @@ public class CommandSetPrefix implements TabExecutor {
             player.sendMessage(Util.toString(e));
             return;
         }
-        String strip =
-                ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', prefix.replace("&x", "")))
-                        .replace('À', 'A').replace('Á', 'A');
+        String strip = prefix.replaceAll("(?i)&#[0-9a-f]{6}", "").replace("&x", ""); // &#RRGGBB
+        strip = ChatColor.stripColor(ChatColor.translateAlternateColorCodes('&', strip)) // &x&F&F&5&5&A&A
+            .replace('À', 'A').replace('Á', 'A');
         if (!player.hasPermission("nitroplate.setprefix.bypass") && (prefix.length() > 240 || strip.length() > 16)) {
             if ("ja_jp".equalsIgnoreCase(player.getLocale())) {
                 player.sendMessage(ChatColor.RED + "Prefixが長すぎます。");
